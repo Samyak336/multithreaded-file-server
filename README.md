@@ -1,7 +1,6 @@
 # Multithreaded File Server
 
-**Context.** Course project, February–April 2026, B.Tech. Data Science & AI, IIT Roorkee. By Samyak Ajmera, Tarun Aryan, Amritanshu Tiwari and Vidit Aggarwal ([who did what](#team)). The original code was not kept after submission, so this repository is a rebuild of our design, published to GitHub in October 2026.
-
+**Context.** Course project, February–April 2026, B.Tech. Data Science & AI, IIT Roorkee. By Samyak Ajmera, Tarun Aryan, Amritanshu Tiwari and Vidit Aggarwal. 
 [![CI](https://github.com/Samyak336/multithreaded-file-server/actions/workflows/ci.yml/badge.svg)](https://github.com/Samyak336/multithreaded-file-server/actions/workflows/ci.yml)
 
 A concurrent TCP file server written in C++17 on POSIX sockets and pthreads. Many clients can upload, download, append to, copy and rename files at the same time. Per-file reader-writer locks built from semaphores keep the files consistent, and a global lock order makes the server deadlock-free. Users log in against salted SHA-256 password hashes (OpenSSL) and are limited by role.
