@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Release
+            sanitizer: ""
+            build_type: Release
+          - name: ThreadSanitizer
+            sanitizer: thread
+            build_type: RelWithDebInfo
+          - name: AddressSanitizer + UBSan
+            sanitizer: address,undefined
+            build_type: RelWithDebInfo
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends cmake g++ libssl-dev
+
+      # Recent runner kernels randomize mmap addresses more than the sanitizers' shadow memory supports.
+      - name: Reduce mmap randomization for sanitizers
+        if: matrix.sanitizer != ''
+        run: sudo sysctl vm.mmap_rnd_bits=28
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DMTFS_SANITIZER="${{ matrix.sanitizer }}"
+
+      - name: Build
+        run: cmake --build build -j"$(nproc)"
+
+      - name: Unit and end-to-end tests
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Stress test (16 clients, 5 s)
+        env:
+          TSAN_OPTIONS: halt_on_error=1
+        run: bash scripts/stress.sh build 16 5

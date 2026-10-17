@@ -1,0 +1,15 @@
+# Build output
+build/
+build-*/
+cmake-build-*/
+compile_commands.json
+
+# Runtime data created by the server and mtfs-user
+data/
+*.part
+
+# Editors and OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store

@@ -1,0 +1,13 @@
+function(mtfs_add_test name)
+  add_executable(${name} ${name}.cpp)
+  target_link_libraries(${name} PRIVATE ${ARGN})
+  target_include_directories(${name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+  add_test(NAME ${name} COMMAND ${name})
+  set_tests_properties(${name} PROPERTIES TIMEOUT 180)
+endfunction()
+
+mtfs_add_test(test_rw_lock mtfs_server_core)
+mtfs_add_test(test_lock_manager mtfs_server_core)
+mtfs_add_test(test_auth mtfs_auth)
+mtfs_add_test(test_file_store mtfs_server_core)
+mtfs_add_test(test_end_to_end mtfs_server_core mtfs_client)
