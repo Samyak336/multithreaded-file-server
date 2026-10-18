@@ -214,10 +214,10 @@ Under ThreadSanitizer (16 clients, 8 s) the server handled 229,424 operations wi
 
 | Member | Area |
 |---|---|
-| **Samyak Ajmera** (lead) | Architecture and the CMake build; pthread worker pool, accept loop and graceful shutdown; concurrency control (semaphore-based reader-writer locks, per-file lock table, deadlock-free lock ordering); request dispatch and role enforcement; stress testing and sanitizer runs |
+| Samyak Ajmera | Architecture and the CMake build; pthread worker pool, accept loop and graceful shutdown; concurrency control (semaphore-based reader-writer locks, per-file lock table, deadlock-free lock ordering) |
 | Tarun Aryan | Wire protocol and message framing, socket I/O layer, client library and the interactive client |
-| Amritanshu Tiwari | Password hashing with OpenSSL, the user database, the `mtfs-user` admin CLI |
-| Vidit Aggarwal | Storage layer (name validation, atomic uploads and appends, copy/rename), logging, end-to-end tests and CI |
+| Amritanshu Tiwari | Password hashing with OpenSSL, the user database, the `mtfs-user` admin CLI, request dispatch and role enforcement| 
+| Vidit Aggarwal | Storage layer (name validation, atomic uploads and appends, copy/rename), logging, end-to-end tests and CI, stress testing and sanitizer runs |
 
 ## License
 
